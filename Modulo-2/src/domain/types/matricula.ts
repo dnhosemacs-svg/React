@@ -27,5 +27,10 @@ export function generarReporte(estado: EstadoMatricula): string {
 
     case "FINALIZADA":
       return `Matrícula finalizada. Nota media: ${estado.notaMedia}.`;
+
+    default: {
+      const _exhaustiveCheck: never = estado;
+      return _exhaustiveCheck;
+    }
   }
 }
