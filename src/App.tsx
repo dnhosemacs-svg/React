@@ -1,57 +1,51 @@
 import { useEffect, useMemo, useState } from "react";
 import { DataTable, type Column } from "./components/DataTable";
 import { aPublico, indexarPorId, obtenerResumen, servidorConfigFija } from "./types/ejemplos";
+import { servidoresMock } from "./data/servidores.mock";
 import { fetchServidorMock, type ServidorResuelto } from "./services/servidor.service";
+import { calcularDiferenciaDias } from "./utils/dateDiff";
 import type {
   DatosActualizacionServidor,
   Servidor,
 } from "./types/servidor";
 import "./App.css";
 
-const servidoresIniciales: Servidor[] = [
-  {
-    id: "srv-01",
-    ip: "192.168.1.10",
-    puerto: 8080,
-    estado: "ACTIVO",
-    ultimaRevision: new Date("2026-03-20"),
-    tokenInterno: "secret-1",
-  },
-  {
-    id: "srv-02",
-    ip: "192.168.1.20",
-    puerto: 3000,
-    estado: "MANTENIMIENTO",
-    ultimaRevision: new Date("2026-03-18"),
-    tokenInterno: "secret-2",
-  },
-];
-
-function calcularDiferenciaDias(fechaInicio: Date, fechaFin: Date): number {
-  const msPorDia = 1000 * 60 * 60 * 24;
-  return Math.floor((fechaFin.getTime() - fechaInicio.getTime()) / msPorDia);
-}
-
 function App() {
-  const [servidores, setServidores] = useState<Servidor[]>(servidoresIniciales);
+  /**
+   * Fuente principal de datos para la tabla.
+   * En un caso real vendría de una API; aquí inicia desde mocks tipados.
+   */
+  const [servidores, setServidores] = useState<Servidor[]>(servidoresMock);
+
+  /**
+   * Ejemplo de Awaited<T>: el tipo real resuelto por una función async.
+   * (Sirve como evidencia y como "mini-carga" simulada).
+   */
   const [servidorAsync, setServidorAsync] = useState<ServidorResuelto | null>(null);
 
-  // Partial<T>: estado de edicion temporal.
+  /**
+   * Partial<T> para edición: el usuario puede modificar solo algunos campos,
+   * y el resto se mantiene como opcional mientras edita.
+   */
   const [editingRow, setEditingRow] = useState<DatosActualizacionServidor>({});
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  // Record<K, T>
+  /** Record<string, Servidor>: índice rápido por ID (diccionario). */
   const servidoresPorId = useMemo(() => indexarPorId(servidores), [servidores]);
 
-  // Pick<T, K>
+  /** Pick<T, K>: vista reducida (útil para UI / listados). */
   const resumenes = servidores.map(obtenerResumen);
 
-  // Omit<T, K>
+  /** Omit<T, K>: versión "pública" sin datos sensibles. */
   const servidoresPublicos = servidores.map(aPublico);
 
-  // Readonly<T>
+  /** Readonly<T>: ejemplo de configuración que no debe mutar. */
   const primerServidorSoloLectura = servidorConfigFija;
 
+  /**
+   * Columnas tipadas para la DataTable genérica.
+   * `key` está restringida a `keyof Servidor` (no puedes poner una clave inexistente).
+   */
   const columns: Column<Servidor>[] = [
     { key: "id", header: "ID" },
     { key: "ip", header: "IP" },
@@ -64,6 +58,7 @@ function App() {
     },
   ];
 
+  /** Selecciona una fila y precarga un formulario parcial de edición. */
   const iniciarEdicion = (id: string) => {
     const actual = servidores.find((servidor) => servidor.id === id);
     if (!actual) return;
@@ -76,6 +71,7 @@ function App() {
     });
   };
 
+  /** Aplica el patch parcial sobre la fila seleccionada (estilo HTTP PATCH). */
   const guardarEdicion = () => {
     if (!selectedId) return;
     setServidores((prev) =>

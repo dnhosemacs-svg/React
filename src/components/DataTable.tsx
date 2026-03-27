@@ -1,5 +1,10 @@
 import React from "react";
 
+/**
+ * Definición de columna para una entidad genérica T.
+ * - `key` limita a claves reales de T (seguridad de tipos).
+ * - `render` permite personalizar el contenido de la celda (sin perder el tipado).
+ */
 export type Column<T> = {
   key: keyof T;
   header: string;
@@ -11,6 +16,11 @@ interface DataTableProps<T> {
   columns: Column<T>[];
 }
 
+/**
+ * DataTable<T>
+ * Componente genérico reutilizable: renderiza una tabla a partir de `data` + `columns`.
+ * Beneficio: si cambias el tipo T, TypeScript obliga a actualizar claves/columnas incorrectas.
+ */
 export function DataTable<T>({ data, columns }: DataTableProps<T>) {
   return (
     <table style={{ borderCollapse: "collapse", width: "100%" }}>

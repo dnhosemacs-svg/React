@@ -1,5 +1,9 @@
 import type { Servidor } from "../types/servidor";
 
+/**
+ * Simula una llamada HTTP que devuelve un Servidor.
+ * El objetivo es demostrar cómo `Awaited<T>` "desenvuelve" el tipo real resuelto.
+ */
 export async function fetchServidorMock(): Promise<Servidor> {
   return Promise.resolve({
     id: "srv-async-01",
@@ -11,4 +15,5 @@ export async function fetchServidorMock(): Promise<Servidor> {
   });
 }
 
+/** Tipo resuelto final de la promesa devuelta por `fetchServidorMock`. */
 export type ServidorResuelto = Awaited<ReturnType<typeof fetchServidorMock>>;
