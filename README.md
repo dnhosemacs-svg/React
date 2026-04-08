@@ -1,19 +1,19 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta plantilla proporciona una configuracion minima para poner en marcha React con Vite, HMR y algunas reglas de ESLint.
 
-Currently, two official plugins are available:
+Actualmente, hay dos plugins oficiales disponibles:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) usa [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) usa [SWC](https://swc.rs/)
 
-## React Compiler
+## Compilador de React
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+El Compilador de React no esta habilitado en esta plantilla debido a su impacto en el rendimiento de desarrollo y compilacion. Para agregarlo, consulta [esta documentacion](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+## Ampliar la configuracion de ESLint
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Si estas desarrollando una aplicacion para produccion, recomendamos actualizar la configuracion para habilitar reglas de lint con conocimiento de tipos:
 
 ```js
 export default defineConfig([
@@ -43,7 +43,7 @@ export default defineConfig([
 ])
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Tambien puedes instalar [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) y [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) para reglas de lint especificas de React:
 
 ```js
 // eslint.config.js
